@@ -3,11 +3,15 @@
     <div class="mask">
       <div class="inputWrap">
         <input type="text" v-model="url" placeholder="此处输入播放地址" />
-        <!-- <select name id>
-          <option value>---请选择--</option>
-          <option value="0" selected="selected">男</option>
-          <option value="1">女</option>
-        </select> -->
+        <select class="option" v-model="options">
+          <option value>请选通道</option>
+          <option
+            v-for="items in proxys"
+            :key="items.key"
+            :value="items.value"
+            selected="selected"
+          >通道{{items.key}}</option>
+        </select>
         <span @click="playVideo">播放</span>
       </div>
     </div>
@@ -30,12 +34,28 @@ export default {
   data() {
     return {
       url: "",
-      proxys:[{key:'load1',value:'http://jx.598110.com/?url='}]
+      options: "",
+      proxys: [
+        { key: "1", value: "http://api.smq1.com/?url=", select: "selected" },
+        { key: "2", value: "http://jx.598110.com/?url=", select: "selected1" },
+        { key: "3", value: "https://api.smq1.com/?url=", select: "selected" },
+        { key: "4", value: "https://jx.hezeshi.net/ce/jlexi.php?url=", select: "selected" },
+        { key: "5", value: "http://api.hellosex.cc/jlexi.php?url=", select: "selected" },
+      ]
     };
   },
   methods: {
     playVideo() {
-      window.open(`http://jx.598110.com/?url=${this.url}`);
+      if (this.url) {
+        if (this.options === "") {
+          alert("请选择通道");
+          return
+        }
+        window.open(`${this.options}${this.url}`);
+        console.log(`${this.options}${this.url}`)
+      } else {
+        alert("请输入vip视频链接");
+      }
     }
   }
 };
@@ -44,7 +64,7 @@ export default {
 <style scoped>
 .divWrap {
   height: 98vh;
-  background: url("../assets/lh.jpeg");
+  background: url("../assets/bg.jpg");
   /* background-size: cover;      覆盖:图片成比例填满盒子。可用于适配 */
   background-size: contain;
   position: relative;
@@ -91,6 +111,11 @@ export default {
   position: fixed;
   top: 0;
   left: 15%;
+}
+.option {
+  color: yellowgreen;
+  border: 1px dashed #ccc;
+  width: 130px;
 }
 </style>
 
