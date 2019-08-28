@@ -6,6 +6,7 @@ import HelloWorld from '@/components/HelloWorld'
 Vue.use(Router)
 
 export default new Router({
+  mode: "history",
   routes: [
     {
       path: '/',
@@ -15,7 +16,7 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: () => import('@/views/Home')
+      component: () => import(/* webpackChunkName: 'home-foo' */ '@/views/Home')
     }
   ]
 })
